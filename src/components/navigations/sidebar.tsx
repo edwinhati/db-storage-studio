@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
+import { ModeToggle } from "../mode-toggle";
 import { Package2, Settings, LucideProps } from "lucide-react";
 
 import {
@@ -53,6 +54,7 @@ function Sidebar({ navigation }: NavigationProps) {
           ))}
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+          <ModeToggle />
           <Tooltip>
             <TooltipTrigger asChild>
               <Link

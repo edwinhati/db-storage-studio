@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Package2, PanelLeft, LucideProps } from "lucide-react";
+import { Search, PanelLeft, LucideProps } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createElement, ForwardRefExoticComponent } from "react";
+import { ModeToggle } from "../mode-toggle";
 
 interface NavigationProps {
   navigation: {
@@ -50,13 +51,7 @@ export default function Header({
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
-            <Link
-              href="#"
-              className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-            >
-              <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-              <span className="sr-only">Acme Inc</span>
-            </Link>
+            <ModeToggle />
             {navigation.map((item, index) => (
               <Link
                 key={index}
