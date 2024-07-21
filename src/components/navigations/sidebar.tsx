@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Package2, Settings, LucideProps } from "lucide-react";
 
 import {
@@ -21,12 +20,6 @@ interface NavigationProps {
 }
 
 function Sidebar({ navigation }: NavigationProps) {
-  const pathname = usePathname();
-
-  navigation.map((item) => {
-    item.current = pathname.toLowerCase().includes(item.name.toLowerCase());
-  });
-
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <TooltipProvider>
