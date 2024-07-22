@@ -1,18 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { Menu, Table, Database, SquareTerminal } from "lucide-react";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import clsx from "clsx";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Menu, Table, Database, SquareTerminal } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface NavigationProps {
   name: string;
@@ -54,9 +47,7 @@ export default function DatabaseLayout({
       <div className="flex flex-col">
         <Header navigation={navigation} />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex justify-center rounded-lg border border-dashed shadow-sm">
-            {children}
-          </div>
+          {children}
         </main>
       </div>
     </div>
@@ -145,17 +136,6 @@ function Sidebar({ navigation }: { navigation: NavigationProps[] }) {
             ))}
           </nav>
         </div>
-        {/* <div className="mt-auto p-4">
-          <Card x-chunk="dashboard-02-chunk-0">
-            <CardHeader className="p-2 pt-0 md:p-4">
-              <CardTitle></CardTitle>
-              <CardDescription></CardDescription>
-            </CardHeader>
-            <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-              <Button size="sm" className="w-full"></Button>
-            </CardContent>
-          </Card>
-        </div> */}
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ import {
   MoreHorizontal,
   ChevronsUpDown,
 } from "lucide-react";
-
+import { data } from "./data";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -55,89 +55,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-const data = [
-  {
-    id: 1,
-    name: "users",
-    columns: ["id", "username", "email", "created_at"],
-    description: "Table containing user information",
-    row: 1000,
-    size: "10MB",
-  },
-  {
-    id: 2,
-    name: "orders",
-    columns: ["id", "user_id", "product_id", "quantity", "status"],
-    description: "Table containing order information",
-    row: 5000,
-    size: "25MB",
-  },
-  {
-    id: 3,
-    name: "products",
-    columns: ["id", "name", "description", "price", "stock"],
-    description: "Table containing product information",
-    row: 200,
-    size: "5MB",
-  },
-  {
-    id: 4,
-    name: "categories",
-    columns: ["id", "name", "description"],
-    description: "Table containing category information",
-    row: 50,
-    size: "1MB",
-  },
-  {
-    id: 5,
-    name: "customers",
-    columns: ["id", "first_name", "last_name", "email", "phone"],
-    description: "Table containing customer information",
-    row: 1000,
-    size: "8MB",
-  },
-  {
-    id: 6,
-    name: "inventory",
-    columns: ["id", "product_id", "quantity"],
-    description: "Table containing inventory information",
-    row: 300,
-    size: "2MB",
-  },
-  {
-    id: 7,
-    name: "sales",
-    columns: ["id", "product_id", "amount", "sale_date"],
-    description: "Table containing sales information",
-    row: 2000,
-    size: "15MB",
-  },
-  {
-    id: 8,
-    name: "employees",
-    columns: ["id", "first_name", "last_name", "position", "salary"],
-    description: "Table containing employee information",
-    row: 100,
-    size: "3MB",
-  },
-  {
-    id: 9,
-    name: "departments",
-    columns: ["id", "name", "manager_id"],
-    description: "Table containing department information",
-    row: 10,
-    size: "500KB",
-  },
-  {
-    id: 10,
-    name: "suppliers",
-    columns: ["id", "name", "contact_info"],
-    description: "Table containing supplier information",
-    row: 50,
-    size: "1MB",
-  },
-];
+import NewTableSheet from "@/components/sheets/new-table";
 
 const schemas = [
   {
@@ -220,13 +138,13 @@ export const columns: ColumnDef<any>[] = [
   },
 ];
 
-export default function DataTableDemo() {
+export default function TablesPage() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("public");
+  const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -248,7 +166,7 @@ export default function DataTableDemo() {
   });
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full">
       <div className="flex items-center py-4 gap-2">
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -299,10 +217,14 @@ export default function DataTableDemo() {
           }
           className="max-w-sm"
         />
-        <Button variant="outline" className="ml-auto">
-          <Plus className="h-5 w-5 mr-1" />
-          New table
-        </Button>
+        <NewTableSheet
+          schema={schemas.find((schema) => schema.value === value)?.label}
+        >
+          <Button variant="outline" className="ml-auto">
+            <Plus className="h-5 w-5 mr-1" />
+            New table
+          </Button>
+        </NewTableSheet>
       </div>
       <div className="rounded-md border">
         <Table>
