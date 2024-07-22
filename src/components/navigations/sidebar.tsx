@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../utils/mode-toggle";
 import { Package2, Settings, LucideProps } from "lucide-react";
 
 import {
