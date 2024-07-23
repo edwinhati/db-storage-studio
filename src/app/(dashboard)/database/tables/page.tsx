@@ -45,6 +45,7 @@ import {
 } from "@/components/ui/table";
 import {
   Command,
+  CommandList,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -56,7 +57,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import NewTableSheet from "@/components/sheets/new-table";
-import { CommandList } from "cmdk";
 
 const schemas = [
   {
@@ -69,7 +69,16 @@ const schemas = [
   },
 ];
 
-export const columns: ColumnDef<any>[] = [
+type Tables = {
+  id: number,
+  name: string;
+  description: string;
+  row: number;
+  size: string;
+  columns: string[];
+};
+
+const columns: ColumnDef<Tables>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
