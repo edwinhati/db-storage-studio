@@ -33,11 +33,9 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <Sidebar navigation={navigation} />
-      <div className="flex flex-col sm:py-4 sm:pl-14">
+      <div className="flex flex-col sm:py-3 sm:pl-14">
         <Header pathname={pathname} navigation={navigation} />
-        <main className="py-2">
-          {children}
-        </main>
+        <main className="py-2">{children}</main>
       </div>
     </div>
   );

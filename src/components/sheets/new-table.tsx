@@ -26,16 +26,11 @@ function NewTableSheet({
           <SheetTitle>
             Create a new table under <Badge variant="outline">{schema}</Badge>
           </SheetTitle>
-          <SheetDescription>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            auctor, nunc eu ultrices.
-          </SheetDescription>
+          <SheetDescription></SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4"></div>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
+          <SheetClose asChild></SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
