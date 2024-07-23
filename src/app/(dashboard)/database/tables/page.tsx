@@ -56,6 +56,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import NewTableSheet from "@/components/sheets/new-table";
+import { CommandList } from "cmdk";
 
 const schemas = [
   {
@@ -185,27 +186,29 @@ export default function TablesPage() {
           <PopoverContent className="w-[200px] p-0">
             <Command>
               <CommandInput placeholder="Search schema..." />
-              <CommandEmpty>No schema found.</CommandEmpty>
-              <CommandGroup>
-                {schemas.map((schema) => (
-                  <CommandItem
-                    key={schema.value}
-                    value={schema.value}
-                    onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue);
-                      setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === schema.value ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                    {schema.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+              <CommandList>
+                <CommandEmpty>No schema found.</CommandEmpty>
+                <CommandGroup>
+                  {schemas.map((schema) => (
+                    <CommandItem
+                      key={schema.value}
+                      value={schema.value}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === schema.value ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {schema.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
             </Command>
           </PopoverContent>
         </Popover>
