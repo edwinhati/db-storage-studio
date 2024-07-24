@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Eye,
   Plus,
@@ -25,7 +25,6 @@ import {
   MoreHorizontal,
   ChevronsUpDown,
 } from "lucide-react";
-import { data } from "./data";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -57,30 +56,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import NewTableSheet from "@/components/sheets/new-table";
-
-const schemas = [
-  {
-    value: "public",
-    label: "Public",
-  },
-  {
-    value: "private",
-    label: "Private",
-  },
-];
+import { LoaderCircle } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Tables = {
-  id: number,
-  name: string;
+  id: string;
+  table_name: string;
   description: string;
-  row: number;
-  size: string;
+  row_count: string;
+  table_size: string;
   columns: string[];
 };
 
+const schemas = [{ schema_name: "public" }, { schema_name: "auth" }];
+
 const columns: ColumnDef<Tables>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "table_name",
     header: ({ column }) => {
       return (
         <Button
@@ -92,24 +84,28 @@ const columns: ColumnDef<Tables>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-5">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="ml-5">{row.getValue("table_name")}</div>,
   },
   {
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
+      <div className="capitalize">
+        {row.getValue("description") || (
+          <span className="text-gray-400">No description</span>
+        )}
+      </div>
     ),
   },
   {
-    accessorKey: "row",
+    accessorKey: "row_count",
     header: "Rows",
-    cell: ({ row }) => <div>{row.getValue("row")}</div>,
+    cell: ({ row }) => <div>{row.getValue("row_count")}</div>,
   },
   {
-    accessorKey: "size",
+    accessorKey: "table_size",
     header: "Size",
-    cell: ({ row }) => <div>{row.getValue("size")}</div>,
+    cell: ({ row }) => <div>{row.getValue("table_size")}</div>,
   },
   {
     id: "actions",
@@ -149,15 +145,20 @@ const columns: ColumnDef<Tables>[] = [
 ];
 
 export default function TablesPage() {
+  const [loading, setLoading] = useState(false);
+
+  // Combobox state
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("public");
+  const [schema, setSchema] = useState("public");
+
+  // Table state
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
-    data,
+    data: [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -179,58 +180,76 @@ export default function TablesPage() {
     <div className="w-full">
       <div className="flex items-center py-4 gap-2">
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={open}
-              className="w-[200px] justify-between"
-            >
-              {value
-                ? schemas.find((schema) => schema.value === value)?.label
-                : "Select schema"}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {loading ? (
+            <Button variant="outline" className="w-[200px] justify-between">
+              <LoaderCircle className="h-4 w-4 animate-spin" />
+              Loading schemas
             </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search schema..." />
-              <CommandList>
-                <CommandEmpty>No schema found.</CommandEmpty>
-                <CommandGroup>
-                  {schemas.map((schema) => (
-                    <CommandItem
-                      key={schema.value}
-                      value={schema.value}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === schema.value ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      {schema.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
+          ) : (
+            <>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-[200px] justify-between"
+                >
+                  {schema
+                    ? schemas.find((item) => item.schema_name === schema)
+                        ?.schema_name
+                    : "Select schema"}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandInput placeholder="Search schema..." />
+                  <CommandList>
+                    <CommandEmpty>No schema found.</CommandEmpty>
+                    <CommandGroup>
+                      {schemas.map((item) => (
+                        <CommandItem
+                          key={item.schema_name}
+                          value={item.schema_name}
+                          onSelect={(currentValue) => {
+                            setSchema(
+                              currentValue === schema ? "" : currentValue
+                            );
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              schema === item.schema_name
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          {item.schema_name}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </>
+          )}
         </Popover>
         <Input
           placeholder="Search for a table"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("table_name")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
         <NewTableSheet
-          schema={schemas.find((schema) => schema.value === value)?.label}
+          schema={
+            schemas.find((item) => item.schema_name === schema)?.schema_name
+          }
         >
           <Button variant="outline" className="ml-auto">
             <Plus className="h-5 w-5 mr-1" />
@@ -259,28 +278,46 @@ export default function TablesPage() {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
+            {loading ? (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
+                <TableCell colSpan={columns.length} className="space-y-2">
+                  <Skeleton className="w-full h-[20px] rounded-md" />
+                  <Skeleton className="w-full h-[20px] rounded-md" />
                 </TableCell>
               </TableRow>
+            ) : (
+              <>
+                {table.getRowModel()?.rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No tables found in{" "}
+                      <span className="font-semibold">
+                        {
+                          schemas.find((item) => item.schema_name === schema)
+                            ?.schema_name
+                        }
+                      </span>{" "}
+                      schema
+                    </TableCell>
+                  </TableRow>
+                )}
+              </>
             )}
           </TableBody>
         </Table>
