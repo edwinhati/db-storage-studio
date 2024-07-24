@@ -68,8 +68,6 @@ type Tables = {
   columns: string[];
 };
 
-const schemas = [{ schema_name: "public" }, { schema_name: "auth" }];
-
 const columns: ColumnDef<Tables>[] = [
   {
     accessorKey: "table_name",
@@ -145,20 +143,48 @@ const columns: ColumnDef<Tables>[] = [
 ];
 
 export default function TablesPage() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Combobox state
   const [open, setOpen] = useState(false);
   const [schema, setSchema] = useState("public");
+  const [schemas, setSchemas] = useState<{ schema_name: string }[]>([]);
 
   // Table state
+  const [tables, setTables] = useState<Tables[]>([]);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
+  // Fetch schemas
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("/api/v1/pg/schema");
+      const data = await response.json();
+      setSchemas(data.data);
+    }
+    fetchData();
+  }, []);
+
+  // Fetch tables
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/api/v1/pg/tables/${schema}`);
+      const data = await response.json();
+      setTables(data.data);
+    }
+    fetchData();
+  }, [schema]);
+
+  useEffect(() => {
+    if (schemas.length && tables.length) {
+      setLoading(false);
+    }
+  }, [schemas, tables]);
+
   const table = useReactTable({
-    data: [],
+    data: tables,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
