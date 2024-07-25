@@ -219,7 +219,7 @@ export default function TablesPage() {
             (table.getColumn("table_name")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("table_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
