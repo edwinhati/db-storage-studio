@@ -29,7 +29,7 @@ app.get("/pg/schema", async (c) => {
 
 app.get("/pg/tables/:schema", async (c) => {
   try {
-    const schema = c.req.param('schema');
+    const schema = c.req.param("schema");
     const tables = await getTablesFromSchema(schema);
     return c.json({
       status: 200,

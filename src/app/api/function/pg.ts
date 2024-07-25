@@ -94,4 +94,43 @@ const getTablesFromSchema = async (schemaName: string) => {
   }));
 };
 
-export { getAllSchema, getTablesFromSchema };
+const createTable = async (
+  schemaName: string,
+  tableName: string,
+  columns: any[]
+) => {
+  const columnsString = columns
+    .map(
+      (column: {
+        name: any;
+        type: any;
+        primaryKey: any;
+        foreignKey: { table: any; column: any };
+      }) => {
+        let columnDefinition = `"${column.name}" ${column.type}`;
+        if (column.primaryKey) {
+          columnDefinition += " PRIMARY KEY";
+        }
+        if (column.foreignKey) {
+          columnDefinition += ` REFERENCES ${column.foreignKey.table}(${column.foreignKey.column})`;
+        }
+        return columnDefinition;
+      }
+    )
+    .join(", ");
+
+  const createTableQuery = `CREATE TABLE "${schemaName}"."${tableName}" (${columnsString});`;
+
+  await pool.query(createTableQuery);
+
+  for (let column of columns) {
+    if (column.description) {
+      const descriptionQuery = `COMMENT ON COLUMN "${schemaName}"."${tableName}"."${column.name}" IS '${column.description}';`;
+      await pool.query(descriptionQuery);
+    }
+  }
+
+  return `Table ${tableName} created in schema ${schemaName} with descriptions`;
+};
+
+export { getAllSchema, getTablesFromSchema, createTable };
