@@ -9,7 +9,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import NewTableForm from "../forms/new-table";
+import { Button } from "../ui/button";
 
 function NewTableSheet({
   children,
@@ -21,16 +22,22 @@ function NewTableSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent>
+      <SheetContent style={{ maxWidth: "60vw" }}>
         <SheetHeader>
           <SheetTitle>
             Create a new table under <Badge variant="outline">{schema}</Badge>
           </SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <div className="grid gap-4 py-4"></div>
+        <div>
+          <NewTableForm />
+        </div>
         <SheetFooter>
-          <SheetClose asChild></SheetClose>
+          <SheetClose asChild>
+            <Button className="w-full mt-2" variant="outline">
+              Cancel
+            </Button>
+          </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
