@@ -178,7 +178,7 @@ export default function TablesPage() {
   }, [schema]);
 
   useEffect(() => {
-    if (schemas.length && tables.length) {
+    if (schemas.length && tables) {
       setLoading(false);
     }
   }, [schemas, tables]);
