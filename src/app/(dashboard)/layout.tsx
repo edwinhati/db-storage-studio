@@ -6,7 +6,7 @@ import Sidebar from "@/components/navigations/sidebar";
 import type { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent } from "react";
 
-import { Home, Package, Database } from "lucide-react";
+import { Home, Database } from "lucide-react";
 
 interface NavigationProps {
   navigation: {

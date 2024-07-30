@@ -4,7 +4,7 @@ import {
   getAllSchema,
   getTablesFromSchema,
   createTable,
-} from "@/app/api/function/pg";
+} from "@/features/database/hooks";
 
 jest.mock("pg", () => {
   const mPool = {

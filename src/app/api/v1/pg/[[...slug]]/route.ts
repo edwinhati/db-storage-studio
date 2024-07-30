@@ -1,8 +1,12 @@
 import { Elysia } from "elysia";
-import { getAllSchema, getTablesFromSchema, createTable } from "../../function/pg";
+import {
+  getAllSchema,
+  getTablesFromSchema,
+  createTable,
+} from "@/features/database/hooks";
 
-const app = new Elysia({ prefix: "/api/v1" })
-  .get("/pg/schema", async () => {
+const app = new Elysia({ prefix: "/api/v1/pg" })
+  .get("/schema", async () => {
     try {
       const schemas = await getAllSchema();
       return {
@@ -18,7 +22,7 @@ const app = new Elysia({ prefix: "/api/v1" })
       };
     }
   })
-  .get("/pg/tables/:schema", async (req) => {
+  .get("/tables/:schema", async (req) => {
     try {
       const { schema } = req.params;
       const tables = await getTablesFromSchema(schema);
@@ -35,7 +39,7 @@ const app = new Elysia({ prefix: "/api/v1" })
       };
     }
   })
-  .post("/pg/table", async (req) => {
+  .post("/table", async (req) => {
     try {
       const { schema, table, columns } = req.body as {
         schema: string;

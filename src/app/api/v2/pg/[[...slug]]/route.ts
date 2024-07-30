@@ -1,16 +1,10 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { getAllSchema, getTablesFromSchema } from "../../function/pg";
+import { getAllSchema, getTablesFromSchema } from "@/features/database/hooks";
 
-const app = new Hono().basePath("/api/v2");
+const app = new Hono().basePath("/api/v2/pg");
 
-app.get("/hello", (c) => {
-  return c.json({
-    message: "Hello Next.js!",
-  });
-});
-
-app.get("/pg/schema", async (c) => {
+app.get("/schema", async (c) => {
   try {
     const schemas = await getAllSchema();
     return c.json({
@@ -27,7 +21,7 @@ app.get("/pg/schema", async (c) => {
   }
 });
 
-app.get("/pg/tables/:schema", async (c) => {
+app.get("/tables/:schema", async (c) => {
   try {
     const schema = c.req.param("schema");
     const tables = await getTablesFromSchema(schema);

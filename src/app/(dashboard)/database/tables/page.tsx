@@ -56,8 +56,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import NewTableSheet from "@/components/sheets/new-table";
 import { Skeleton } from "@/components/ui/skeleton";
+import NewTableSheet from "@/features/database/components/sheets/new-table";
 
 type Tables = {
   id: string;

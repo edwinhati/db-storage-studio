@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/assets/styles/globals.css";
 import { ThemeProvider } from "./provider";
 import { Inter as FontSans } from "next/font/google";
 

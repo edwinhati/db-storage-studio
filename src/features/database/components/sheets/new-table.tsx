@@ -9,8 +9,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import NewTableForm from "../forms/new-table";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import NewTableForm from "@/features/database/components/forms/new-table";
 
 function NewTableSheet({
   children,
