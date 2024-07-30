@@ -6,7 +6,7 @@ import Sidebar from "@/components/navigations/sidebar";
 import type { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent } from "react";
 
-import { Home, Package, Database } from "lucide-react";
+import { Home } from "lucide-react";
 
 interface NavigationProps {
   navigation: {
@@ -18,9 +18,7 @@ interface NavigationProps {
 }
 
 const navigation: NavigationProps["navigation"] = [
-  { name: "Project", href: "/project", icon: Home },
-  { name: "Database", href: "/database/tables", icon: Database },
-  { name: "Storage", href: "/storage", icon: Package },
+  { name: "Project", href: "/project", icon: Home }
 ];
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
