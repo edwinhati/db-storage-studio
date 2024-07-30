@@ -20,7 +20,6 @@ interface NavigationProps {
 const navigation: NavigationProps["navigation"] = [
   { name: "Project", href: "/project", icon: Home },
   { name: "Database", href: "/database/tables", icon: Database },
-  { name: "Storage", href: "/storage", icon: Package },
 ];
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
