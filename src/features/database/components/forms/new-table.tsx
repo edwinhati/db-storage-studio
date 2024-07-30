@@ -34,7 +34,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X } from "lucide-react";
+import { X, Menu } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().nonempty("Please provide a name for your new table."),
@@ -102,12 +102,12 @@ export default function NewTableForm() {
         {
           name: "created_at",
           type: "TIMESTAMP",
-          defaultValue: "",
+          defaultValue: "now()",
         },
         {
           name: "updated_at",
           type: "TIMESTAMP",
-          defaultValue: "",
+          defaultValue: "now()",
         },
       ],
     },
@@ -168,6 +168,7 @@ export default function NewTableForm() {
               <TableCaption></TableCaption>
               <TableHeader>
                 <TableRow>
+                  <TableHead></TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Default Value</TableHead>
@@ -177,6 +178,9 @@ export default function NewTableForm() {
               <TableBody>
                 {fields.map((field, index) => (
                   <TableRow key={field.id}>
+                    <TableCell>
+                      <Menu size="16" />
+                    </TableCell>
                     <TableCell>
                       <FormField
                         control={form.control}
@@ -194,7 +198,12 @@ export default function NewTableForm() {
                         name={`columns.${index}.type`}
                         render={({ field }) => (
                           <FormControl>
-                            <Select {...field}>
+                            <Select
+                              {...field}
+                              onValueChange={(value) => {
+                                field.onChange(value);
+                              }}
+                            >
                               <SelectTrigger className="ml-2">
                                 <SelectValue placeholder={field.value} />
                               </SelectTrigger>
@@ -229,6 +238,12 @@ export default function NewTableForm() {
                           <FormControl>
                             <Checkbox
                               {...field}
+                              checked={field.value || false}
+                              onClick={() => {
+                                field.onChange({
+                                  target: { value: !field.value },
+                                });
+                              }}
                               value={field.value ? "true" : "false"}
                             />
                           </FormControl>
