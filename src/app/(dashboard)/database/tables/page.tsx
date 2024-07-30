@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import { useState, useEffect, Key } from "react";
 import {
   Eye,
