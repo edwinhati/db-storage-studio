@@ -117,7 +117,7 @@ const columns: ColumnDef<Tables>[] = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent className="w-48" align="end">
             <DropdownMenuItem onClick={() => {}}>
               <Eye className="h-4 w-4 mr-2" />
               View table

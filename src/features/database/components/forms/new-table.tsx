@@ -273,13 +273,16 @@ export default function NewTableForm() {
               </TableBody>
             </Table>
 
-            <div
-              className="flex justify-center items-center border border-gray-700 border-dashed rounded-md mt-5 p-2"
-              onClick={() => {
-                append({ name: "", type: "", primaryKey: false });
-              }}
-            >
-              Add Column
+            <div className="flex justify-center items-center border border-gray-700 border-dashed rounded-md mt-5 p-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  append({ name: "", type: "", primaryKey: false });
+                }}
+              >
+                Add Column
+              </Button>
             </div>
           </div>
         </ScrollArea>
