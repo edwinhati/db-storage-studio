@@ -50,7 +50,7 @@ export default function Header({
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
-          <nav className="grid gap-6 text-lg font-medium">
+          <nav className="grid gap-6 text-md font-medium">
             <ModeToggle />
             {navigation.map((item, index) => (
               <Link

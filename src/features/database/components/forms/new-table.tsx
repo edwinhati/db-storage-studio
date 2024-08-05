@@ -171,7 +171,7 @@ export default function NewTableForm() {
               )}
             />
             <Separator className="mt-5" />
-            <h2 className="text-lg font-semibold mt-5">Columns</h2>
+            <h2 className="text-md font-semibold mt-5">Columns</h2>
             <Table>
               <TableCaption></TableCaption>
               <TableHeader>

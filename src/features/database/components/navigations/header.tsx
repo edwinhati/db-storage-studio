@@ -16,10 +16,10 @@ function Header({ navigation }: { navigation: Navigation[] }) {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col">
-          <nav className="grid gap-2 text-lg font-medium">
+          <nav className="grid gap-2 text-md font-medium">
             <Link
               href="#"
-              className="flex items-center gap-2 text-lg font-semibold"
+              className="flex items-center gap-2 text-md font-semibold"
             >
               <span className="sr-only">Database</span>
             </Link>
@@ -52,7 +52,7 @@ function Header({ navigation }: { navigation: Navigation[] }) {
         </SheetContent>
       </Sheet>
       <div className="flex items-center">
-        <h1 className="text-lg font-semibold md:text-2xl">
+        <h1 className="text-md font-semibold md:text-2xl">
           {navigation.find((item) => item.current)?.name}
         </h1>
       </div>

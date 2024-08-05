@@ -48,7 +48,7 @@ export default function SqlEditorPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-7 gap-1 text-sm"
+                  className="h-7 gap-1 text-xs"
                 >
                   <AlignLeft className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only">Prettify SQL</span>
@@ -56,7 +56,7 @@ export default function SqlEditorPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-7 gap-1 text-sm"
+                  className="h-7 gap-1 text-xs"
                 >
                   <span className="sr-only sm:not-sr-only">Run</span>
                   <CornerDownLeft className="h-3.5 w-3.5" />
