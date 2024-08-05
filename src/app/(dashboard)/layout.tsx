@@ -5,6 +5,7 @@ import Header from "@/components/navigations/header";
 import Sidebar from "@/components/navigations/sidebar";
 import type { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent } from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 import { Home, Database } from "lucide-react";
 
@@ -36,6 +37,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
         <Header pathname={pathname} navigation={navigation} />
         <main className="py-2">{children}</main>
       </div>
+      <Toaster />
     </div>
   );
 }
