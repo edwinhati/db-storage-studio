@@ -264,7 +264,7 @@ function SchemaCombobox({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       {loading ? (
-        <Button variant="outline" className="w-40 justify-between">
+        <Button variant="outline" className="w-48 justify-between">
           <LoaderCircle className="h-4 w-4 animate-spin" />
           Loading schemas
         </Button>
@@ -275,7 +275,7 @@ function SchemaCombobox({
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-40 justify-between"
+              className="w-48 justify-between"
             >
               {schema
                 ? schemas.find((item) => item.schema_name === schema)
@@ -284,7 +284,7 @@ function SchemaCombobox({
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-40 p-0">
+          <PopoverContent className="w-48 p-0">
             <Command>
               <CommandInput placeholder="Search schema..." />
               <CommandList>
