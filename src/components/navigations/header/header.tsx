@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createElement, ForwardRefExoticComponent } from "react";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/utils/mode-toggle";
 
 interface NavigationProps {
   navigation: {
